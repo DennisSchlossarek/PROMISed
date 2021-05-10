@@ -40,5 +40,8 @@ How to run PROMISed:
 4. Download all files from https://github.com/DennisSchlossarek/PROMISed
 5. Open app.R in RStudio
 6. Run PROMISed by clicking "Run App" in the top right corner of your Code Editor pane
-
 ![Shiny RStudio interface](https://user-images.githubusercontent.com/83764220/117620521-d4d34080-b170-11eb-8a89-133424c9b632.PNG)
+
+7. The PROMISed start page should load like this:
+![PROMISed capture](https://user-images.githubusercontent.com/83764220/117635624-4797e800-b180-11eb-8b3a-dee42e00a263.PNG)
+

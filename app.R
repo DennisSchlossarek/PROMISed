@@ -60,8 +60,10 @@ ui <- fluidPage( # Start of USER-INTERFACE
            # Title Image: PROMIS Processing Logo,           
            tags$a(imageOutput(outputId = "my_image_processing",
                        width = "340%", 
-                       height = "157px"))
+                       height = "157px")),
                   #  href = "http://promis.mpimp-golm.mpg.de/PDP1/")
+           helpText("PROMISed review Version: 1.0.2")
+           
            ),
     
     column(1,

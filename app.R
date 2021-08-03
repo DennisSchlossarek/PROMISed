@@ -26,7 +26,7 @@ require(pastecs)      # for local maxima
 require(zip)
 
 # Load functions from outside R-scripts
-source("./Functions_PROMISEed_v.1.0.2.R")
+source("./Functions_PROMISEed_v.1.0.0.R")
 source("./publication_list_HTML.R")
 
 # Load Example Data Files

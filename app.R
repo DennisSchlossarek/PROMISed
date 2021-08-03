@@ -26,7 +26,7 @@ require(pastecs)      # for local maxima
 require(zip)
 
 # Load functions from outside R-scripts
-source("./Functions_PROMISEed_v.1.0.0.R")
+source("./Functions_PROMISEed_v.1.0.2.R")
 source("./publication_list_HTML.R")
 
 # Load Example Data Files
@@ -60,10 +60,8 @@ ui <- fluidPage( # Start of USER-INTERFACE
            # Title Image: PROMIS Processing Logo,           
            tags$a(imageOutput(outputId = "my_image_processing",
                        width = "340%", 
-                       height = "157px")),
+                       height = "157px"))
                   #  href = "http://promis.mpimp-golm.mpg.de/PDP1/")
-           helpText("PROMISed review Version: 1.0.0")
-           
            ),
     
     column(1,
@@ -420,6 +418,8 @@ column(1,
                                                           trigger = "hover")
                                       ),
                                       
+                                      checkboxInput(inputId = "nodeconvolution_input", label = "No Deconvolution"),
+                                      
                                       br(),
                                       
                                       downloadButton(outputId = "down_decon", 
@@ -538,15 +538,18 @@ column(1,
                                           splitLayout(
                                             radioButtons(inputId = "node_color_input",
                                                          label = "Node Colors",
-                                                         choices = c("Uniform", "Cluster", "k-Coreness"),
-                                                         selected = "Uniform",
+                                                        # choices = c(1,2),
+                                                          choiceNames = c("Cluster", "k-Coreness"), #"Uniform",
+                                                          choiceValues = c(1,2),
+                                                        # selected = 1, #"Uniform",
                                                          inline = FALSE),
+                                            
                                             
                                             radioButtons(inputId = "my_layout", 
                                                          label = "Layout", 
-                                                         choiceNames = c("Components", "Force-directed","Automatic"),
-                                                         choiceValues = c("layout_components",  "layout.fruchterman.reingold", "layout.auto"),
-                                                         selected = "layout_components",
+                                                         choiceNames = c("Force-directed","Circles"), # "Trees","Randomly???"),
+                                                         choiceValues =c(1:2),
+                                                       #  selected = "with_fr",
                                                          inline = FALSE)
                                             
                                           )
@@ -619,14 +622,10 @@ column(1,
               
   ) # End of TabsetPanel "First Order"
 ) # End of UI
+####
 
-# Create Back-End 
 server <- function(input, output, session){ # Start of SERVER-Mainframe
   
-   if(!any(list.dirs() == "./promised_tmp")){
-   dir.create(path = "./promised_tmp")
-   }
-    
   promised_tmp_wd <- "./promised_tmp"
   code <- paste(paste(sample(x = LETTERS, 2), collapse = ""), sample(999, 1), sep = "")
 #  message_log <- file(paste0(Sys.Date(), "_", code,"_log.txt"), open = "a")
@@ -822,8 +821,8 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                            column(10, offset = 1,
                                   
                                   visNetworkOutput(outputId = paste0("visnetwork_network_", i), 
-                                                   height = "500px", 
-                                                   width = "500px"), #%>% withSpinner(color="#0dc5c1"),
+                                                   height = "600px", 
+                                                   width = "900px"), #%>% withSpinner(color="#0dc5c1"),
                                   hr(""),
                                   br(""),
                                   downloadButton(outputId = paste0("network_files_", i),
@@ -1406,13 +1405,15 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                           # Plot Deconvoluted
                           observeEvent({input$var_min_peak
                             input$var_limit_small
-                            input$var_limit_large}, {
+                            input$var_limit_large
+                            input$nodeconvolution_input}, {
                               
                               # For treatments in separate Tabs:
                               observeEvent(input$Deconvo_Tabs, {  
                                 
-                             # j <- as.numeric(input$Deconvo_Tabs)
                               
+                                if(input$nodeconvolution_input == FALSE){
+                                
                               selected_data_rep_comb_row_j <- selected_data_rep_comb_row[,,as.numeric(input$Deconvo_Tabs),, drop = FALSE]
                             
                               g <- matrix(selected_data_rep_comb_row_j, nrow = 1, ncol = dim(selected_data_array)[2])
@@ -1425,7 +1426,22 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                                               var_min_peak = input$var_min_peak, 
                                                               var_limit_small = input$var_limit_small, 
                                                               var_limit_large = input$var_limit_large))
-                            
+                           
+                              } else if(input$nodeconvolution_input == TRUE){
+                                
+                                selected_data_deconvolute <- data.frame(matrix(nrow = 0, ncol = c(1+ metadata_a[[6]])))
+                                
+                                i <- 1
+                                while(i <= metadata_a[[2]]){
+                                  
+                                  selected_data_deconvolute <- rbind(selected_data_deconvolute, data.frame(Treatment = metadata_a[[1]][i], selected_data_rep_comb_row[,,i,]))
+                                  
+                                  i <- i + 1
+                                }
+                                
+                              }
+                           
+                              
                             # Render (interactive) Plot showing the deconvoluted Peaks of a selected profile
                               output[[paste0("decon_plot_", as.numeric(input$Deconvo_Tabs))]] <- renderPlot({
                               
@@ -1450,23 +1466,59 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                       # Plot Deconvoluted
                       observeEvent({input$var_min_peak
                         input$var_limit_small
-                        input$var_limit_large}, {
-                          
-                        my_data_deconvoluted_a <- deconvolute.array(my_data_rep_comb_a, 
-                                                                  names_treatment = metadata_a[[1]], 
-                                                                  var_min_peak = input$var_min_peak, 
-                                                                  var_limit_small = input$var_limit_small, 
-                                                                  var_limit_large = input$var_limit_large,
-                                                                  name_col = metadata_a[[5]],
-                                                                  nr_col = metadata_a[[6]])                      
+                        input$var_limit_large
+                        input$nodeconvolution_input
+                        }, {
                         
-                        my_data_deconvoluted_b <- deconvolute.array(my_data_rep_comb_b, 
-                                                                  names_treatment = metadata_b[[1]], 
-                                                                  var_min_peak = input$var_min_peak, 
-                                                                  var_limit_small = input$var_limit_small, 
-                                                                  var_limit_large = input$var_limit_large,
-                                                                  name_col = metadata_b[[5]],
-                                                                  nr_col = metadata_b[[6]])     
+                          if(input$nodeconvolution_input == FALSE){
+                            
+                            my_data_deconvoluted_a <- deconvolute.array(my_data_rep_comb_a, 
+                                                                        names_treatment = metadata_a[[1]], 
+                                                                        var_min_peak = input$var_min_peak, 
+                                                                        var_limit_small = input$var_limit_small, 
+                                                                        var_limit_large = input$var_limit_large,
+                                                                        name_col = metadata_a[[5]],
+                                                                        nr_col = metadata_a[[6]])                      
+                            
+                            my_data_deconvoluted_b <- deconvolute.array(my_data_rep_comb_b, 
+                                                                        names_treatment = metadata_b[[1]], 
+                                                                        var_min_peak = input$var_min_peak, 
+                                                                        var_limit_small = input$var_limit_small, 
+                                                                        var_limit_large = input$var_limit_large,
+                                                                        name_col = metadata_b[[5]],
+                                                                        nr_col = metadata_b[[6]])     
+                        
+                          } else if(input$nodeconvolution_input == TRUE){
+                            
+                          #  my_data_deconvoluted_a <- data.frame(matrix(nrow = 0, ncol = c(1+ metadata_a[[6]])))
+                           # my_data_deconvoluted_b <- data.frame(matrix(nrow = 0, ncol = c(1+ metadata_b[[6]])))
+                            
+                            my_data_deconvoluted_a <- numeric()
+                            my_data_deconvoluted_b <- numeric()
+                            
+                            i <- 1
+                            while(i <= metadata_a[[2]]){
+                              
+                              nondecon_data_a <- (as.matrix(my_data_rep_comb_a[,,i,]))
+                              nondecon_data_a <- data.frame(Treatment = metadata_a[[1]][i], nondecon_data_a)
+                              
+                              my_data_deconvoluted_a <- rbind(my_data_deconvoluted_a, nondecon_data_a)
+                                                       
+                              nondecon_data_b <- (as.matrix(my_data_rep_comb_b[,,i,]))
+                              nondecon_data_b <- data.frame(Treatment = metadata_b[[1]][i], nondecon_data_b)
+                              
+                              my_data_deconvoluted_b <- rbind(my_data_deconvoluted_b, nondecon_data_b)
+                              
+                              i <- i + 1
+                            }
+                           
+                            empty_profiles_a <- rowSums(my_data_deconvoluted_a[,-1]) == 0 
+                            empty_profiles_b <- rowSums(my_data_deconvoluted_b[,-1]) == 0
+                           
+                            my_data_deconvoluted_a <- my_data_deconvoluted_a[!empty_profiles_a,]
+                            my_data_deconvoluted_b <- my_data_deconvoluted_b[!empty_profiles_b,]
+                            
+                           }
                         
                         output$down_decon <- downloadHandler(filename = paste0(Sys.Date(),"_", code, "_PROMISed_3_deconvoluted.zip"), 
                                                                 content = function(file){
@@ -1602,17 +1654,21 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                               method = as.character(input$cor_method_integration))
                                 })
                                 
+                                cor_display <- cor_reactive(data1 = selected_decon_data,
+                                                            data2 = other_decon_data , 
+                                                            pattern = best_hit_selector, 
+                                                            method = as.character(input$cor_method_integration))
+                                
                                 output[[paste0("pcc_table_", j)]]  <- DT::renderDataTable(    
                                   
-                                  cor_reactive(data1 = selected_decon_data, 
-                                               data2 = other_decon_data , 
-                                               pattern = best_hit_selector, 
-                                               method =as.character(input$cor_method_integration)),
-                                  
+                                  formatRound(datatable(cor_display), 
+                                              columns = c(1:ncol(cor_display)),
+                                              digits = 3),
+                                              
                                   options = list(
                                     dom = 'Bfrltip',
                                     pageLength = 5,
-                                    lengthMenu = c(5, 10,25, 50, 100, 200, 500),
+                               #     lengthMenu = c(5, 10,25, 50, 100, 200, 500),
                                     scrollX = TRUE,
                                     scrollCollapse = TRUE,
                                     searchHighlight = TRUE
@@ -1679,14 +1735,37 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                             
                                           } else if (input$network_filter == "network_filter_1"){
                                             
-                                            my_data_decon_a <- my_data_decon_a[grep(pattern = input$select_rows_a, rownames(my_data_decon_a), fixed = TRUE),, drop = FALSE]
-                                            my_cor_table3 <- cor(x = t(my_data_decon_b), y = t(my_data_decon_a), method = as.character(input$cor_method_integration))
+                                            my_data_decon_a_sel <- my_data_decon_a[grep(pattern = input$select_rows_a, rownames(my_data_decon_a), fixed = TRUE),, drop = FALSE]
+                                            
+                                            if(nrow(my_data_decon_a_sel != 0)){  
+                                            
+                                              my_cor_table3 <- cor(x = t(my_data_decon_b), y = t(my_data_decon_a_sel), method = as.character(input$cor_method_integration))
+                                            
+                                             } else {
+                                              
+                                              my_cor_table3 <- data.frame(EntryNotFound = c(0,1),
+                                                                          TrySomethingElse = c(1,0))
+                                              
+                                              colnames(my_cor_table3) <- rownames(my_cor_table3)
+                                              
+                                             }
                                             
                                           } else if (input$network_filter == "network_filter_2"){
                                             
-                                            my_data_decon_b <- my_data_decon_b[grep(pattern = input$select_rows_b, rownames(my_data_decon_b), fixed = TRUE),, drop = FALSE]
-                                            my_cor_table3 <- cor(x = t(my_data_decon_b), y = t(my_data_decon_a), method = as.character(input$cor_method_integration))
+                                            my_data_decon_b_sel <- my_data_decon_b[grep(pattern = input$select_rows_b, rownames(my_data_decon_b), fixed = TRUE),, drop = FALSE]
                                             
+                                            if(nrow(my_data_decon_b_sel != 0)){  
+                                              
+                                              my_cor_table3 <- cor(x = t(my_data_decon_b_sel), y = t(my_data_decon_a), method = as.character(input$cor_method_integration))
+                                          
+                                            } else {
+                                              
+                                              my_cor_table3 <- data.frame(EntryNotFound = c(0,1),
+                                                                          TrySomethingElse = c(1,0))
+                                            
+                                              colnames(my_cor_table3) <- rownames(my_cor_table3)
+                                                
+                                            }
                                           }
                             
                                             my_cor_table3[my_cor_table3 < as.numeric(input$pcc_slider_integration)] <- 0
@@ -1695,11 +1774,22 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                             ##Networking
                                             ### IGRAPH NETWORK ###
                                             
-                                            network_igraph <- custom_igraph(my_cor_table3, pcc = as.numeric(input$pcc_slider_integration))
+                                            network_raw <- custom_igraph(my_cor_table3, pcc = as.numeric(input$pcc_slider_integration))
+                                            network_igraph <- network_raw
+                                            network_decomposed <- decompose(network_raw, "strong")
+                                            
+                                            if(length(network_decomposed) > 1){
+                                              network_igraph <- network_decomposed[[1]]
+                                              for(i in c(2:length(network_decomposed))){
+                                                network_igraph <- network_igraph + network_decomposed[[i]]
+                                              }
+                                            } else {
+                                              network_igraph <- network_decomposed[[1]]
+                                            }
                                             
                                             my_clust <- cluster_louvain(network_igraph, weights = E(network_igraph)$weight)
                                             
-                                            coreness <- data.frame(as.numeric(as.character(coreness(network_igraph))))
+                                            coreness <- coreness(network_igraph)
                                             
                                             coreness_scale <- scale_coreness(coreness)[[1]]
                                             coreness_color <- scale_coreness(coreness)[[2]]
@@ -1711,7 +1801,7 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                                                                                             
                                                                                                             #setwd(promised_tmp_wd)
                                                                                                             
-                                                                                                            write.table(igraph::as_data_frame(network_igraph, what = "edges"), 
+                                                                                                            write.table(igraph::as_data_frame(network_igraph, what = "edges"),
                                                                                                                         paste0(promised_tmp_wd,"/",
                                                                                                                                Sys.Date(),"_", code,
                                                                                                                                "_5_",metadata_a[[7]], "_" ,
@@ -1720,7 +1810,7 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                                                                                                                "_", input$pcc_slider_integration,
                                                                                                                                "_network_edges",".txt"), 
                                                                                                                         sep = "\t")
-                                                                                                            write.table(igraph::as_data_frame(network_igraph, what = "vertices"), 
+                                                                                                            write.table(cbind(igraph::as_data_frame(network_igraph, what = "vertices"), my_clust$membership, coreness), 
                                                                                                                         paste0(promised_tmp_wd,"/",
                                                                                                                                Sys.Date(),"_", code,
                                                                                                                                "_5_",metadata_a[[7]], "_" ,
@@ -1739,73 +1829,75 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                             
                                             ##### VISNETWORK #####
                                             
-                                            network_vis <- toVisNetworkData(network_igraph)
-                                            
-                                            edges_vis <- network_vis$edges
-                                            nodes_vis <- network_vis$nodes
-                                            nodes_vis$cluster <- my_clust$membership
-                                            nodes_vis$coreness <- coreness_scale
-                                            
-                                            nodes_vis$color.border <- "black"
-                                            edges_vis$color <- "black"
-                                            
-                                            output[[paste0("visnetwork_network_", nettab)]] <- renderVisNetwork({  #   #FeatureStacking
+                                            recomposed_layout <- list(layout_(network_igraph, with_fr(), component_wise()),
+                                                                      layout_(network_igraph, in_circle(), component_wise()),
+                                                                      layout_(network_igraph, as_tree(), component_wise()),
+                                                                      layout_(network_igraph, randomly(), component_wise()))
                                               
-                                              visNetwork(nodes = nodes_vis, 
-                                                         edges = edges_vis
-                                              ) %>%
-                                                
-                                                visIgraphLayout(layout  = input$my_layout,
-                                                                physics = FALSE,
-                                                                smooth  = FALSE
-                                                ) %>%
-                                                
-                                                visPhysics(stabilization = FALSE) %>%
-                                                
-                                                
-                                                visOptions(highlightNearest = list(enabled = TRUE, degree = 1),
-                                                           manipulation = FALSE, 
-                                                           selectedBy = "cluster",
-                                                           nodesIdSelection = list(enabled = TRUE)  
-                                                ) %>%  
-                                                
-                                                visInteraction(navigationButtons = TRUE,
-                                                               keyboard = TRUE,
-                                                               multiselect = TRUE,
-                                                               selectConnectedEdges = TRUE,
-                                                               dragNodes = TRUE,
-                                                               zoomView = TRUE
-                                                ) 
-                                              
-                                              
-                                              
-                                            }) 
-                                            
                                             observeEvent(input$node_color_input, {
                                               
-                                              if(input$node_color_input == "Cluster"){
-                                                
-                                                node_background_col <- brewer.pal(n = 10, name = "Paired")[nodes_vis$cluster]
-                                                
-                                              } else if(input$node_color_input == "k-Coreness"){
-                                                
-                                                node_background_col <- coreness_color[nodes_vis$coreness]
-                                                
-                                              } else if(input$node_color_input == "Uniform"){
-                                                
-                                                node_background_col <- "#97C2FC"
-                                                
-                                              }
+                                          #    mycol_network  <- c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", "#AA4499", 
+                                          #                        "#44AA99", "#999933", "#882255", "#661100", "#6699CC", "#888888")
+                                              mycol_network <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7",
+                                                                 "#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", "#AA4499", 
+                                                                 "#44AA99", "#999933", "#882255", "#661100", "#6699CC", "#888888",
+                                                                 "#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7",
+                                                                 "#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", "#AA4499", 
+                                                                 "#44AA99", "#999933", "#882255", "#661100", "#6699CC", "#888888")
                                               
-                                              nodes_update <- nodes_vis 
-                                              nodes_update$color.background = node_background_col
+                                              legendary_node_list <- list(data.frame(label = sort(unique(my_clust$membership)),
+                                                                                     color = mycol_network[sort(unique(my_clust$membership))]),
+                                                                          data.frame(label = format(seq(from = min(coreness), to = max(coreness), length.out = length(unique(coreness_scale))), digits = 1),
+                                                                                     color = coreness_color[sort(unique(coreness_scale))]))
                                               
-                                              visNetworkProxy(paste0("visnetwork_network_", nettab)) %>% 
+                                              colouring_list <- list(mycol_network[my_clust$membership], coreness_color[coreness_scale])
+                                              
+                                              V(network_igraph)$color <- colouring_list[[as.numeric(input$node_color_input)]] 
+                                              V(network_igraph)$cluster <- my_clust$membership
+                                              V(network_igraph)$coreness <- coreness_scale
+                                              E(network_igraph)$color <- "black"
+                                              
+                                              network_vis <- toVisNetworkData(network_igraph)
+                                              
+                                              observeEvent(input$my_layout, {
                                                 
-                                                visUpdateNodes(nodes_update, updateOptions = FALSE)
-                                              
-                                            })
-                                            
+                                                output[[paste0("visnetwork_network_", nettab)]] <- renderVisNetwork({  #   #FeatureStacking
+                                                  
+                                                  visIgraph(network_igraph) %>%
+                                                    
+                                                    visIgraphLayout(layout  = "layout.norm",
+                                                                    physics = FALSE,
+                                                                    smooth  = FALSE,
+                                                                    layoutMatrix = recomposed_layout[[as.numeric(input$my_layout)]]
+                                                    ) %>%
+                                                    
+                                                    visPhysics(stabilization = FALSE) %>%
+                                                    
+                                                    visOptions(highlightNearest = list(enabled = TRUE, degree = 1),
+                                                               manipulation = FALSE, 
+                                                               selectedBy = "cluster",
+                                                               nodesIdSelection = list(enabled = TRUE)  
+                                                    ) %>%  
+                                                    
+                                                    visInteraction(navigationButtons = TRUE,
+                                                                   keyboard = TRUE,
+                                                                   multiselect = TRUE,
+                                                                   selectConnectedEdges = TRUE,
+                                                                   dragNodes = TRUE,
+                                                                   zoomView = TRUE
+                                                    ) %>%
+                                                    
+                                                    visLegend(useGroups = FALSE,
+                                                              addNodes = legendary_node_list[[as.numeric(input$node_color_input)]],
+                                                              main = c("Community", "k-coreness")[[as.numeric(input$node_color_input)]],
+                                                              position = "right", ncol = 2, zoom = FALSE) %>%
+                                                    
+                                                    visEdges(color = "black", width = 1) %>%
+                                                    visNodes(borderWidth = 1)
+                                                  
+                                                })
+                                              })
+                                            })    
                                           }) # Stop observing Network Tabs
                             
                           }) # Stop observing Network Input

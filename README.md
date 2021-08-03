@@ -15,7 +15,7 @@ How to run PROMISed:
       install.packages("shiny")       
       install.packages("shinyBS")            
       install.packages("shinycssloaders")      
-      install.packages("shinybusy") 
+      install.packages("shinybusy")     
       install.packages("DT")        
       install.packages("stringr")       
       install.packages("stats")         

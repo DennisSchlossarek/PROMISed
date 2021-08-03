@@ -26,7 +26,7 @@
 #   10.manhattan.anova.boxplot()        <- Boxplot created form manhattan.anova.row results, shows Distance-vectors in
 #                                    boxplot and the results of TukesHSD
 #
-# "Secondoary" Functions used by Functions listed above:
+# "Secondary" Functions used by Functions listed above:
 #   10.namesCombn()               - combines Names of two Treatments using combn
 #   11.maxNormalizeML()           - Normalizes Profiles to maximum Intensity. Original Script by Marcin.
 #   12.loessDS()                  - wraps up loess-regression and post-smoothing normalization, removal of negative values
@@ -978,7 +978,11 @@ scale_coreness <- function(x){
     i <- i + 1
   }
   
-  coreness_color   <- rev(rainbow(max(coreness_scale, na.rm = FALSE)*1.5, alpha = 0.9)[0:max(coreness_scale, na.rm = FALSE)])
+#  coreness_color   <- rev(rainbow(max(coreness_scale, na.rm = FALSE)*1.5)[0:max(coreness_scale, na.rm = FALSE)])
+  coreness_color <- c("#440154", "#481568", "#482677", "#453781", "#3F4788",
+                      "#39558C", "#32648E", "#2D718E", "#287D8E", "#238A8D", 
+                      "#1F968B", "#20A386", "#29AF7F", "#3CBC75", "#56C667", 
+                      "#74D055", "#94D840", "#B8DE29", "#DCE318", "#FDE725")
   
   list(coreness_scale, coreness_color)
 }
@@ -1108,7 +1112,8 @@ ListCoelutions <- function(data1, data2, selector, pcc_threshold, method, names_
     
     coeluting_list <- list()  
     
-    my_color <- brewer.pal(n = 7, name = "Set1") 
+    my_color <-  c("#E69F00", "#56B4E9", "#009E73", 
+                   "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
     listnames <- names_treatments
     drop <- c()
     mycol <- c()
@@ -1241,14 +1246,38 @@ custom_igraph <- function(cor_table, pcc){
   
   }
   
-  if(all(colnames(cor_table) == rownames(cor_table))){
+  if(nrow(cor_table) == ncol(cor_table)){
+  
+    if(all(colnames(cor_table) == rownames(cor_table))){
     
-    network_igraph <- graph_from_adjacency_matrix(cor_table, 
-                                                  mode = "undirected", 
-                                                  weighted = TRUE, 
-                                                  diag = TRUE)
+      network_igraph <- graph_from_adjacency_matrix(cor_table, 
+                                                    mode = "undirected", 
+                                                    weighted = TRUE, 
+                                                    diag = TRUE)
     
-  } else if(colnames(cor_table) != rownames(cor_table)){
+    
+    } else if(all(colnames(cor_table) != rownames(cor_table))){
+    
+      my_links <- data.frame(matrix(nrow = 0, ncol = 3))
+      colnames(my_links) <- c("from", "to", "weight")
+    
+      i <- 1         
+      while(i <= ncol(cor_table)){
+      
+        my_links_sub <- cbind( from = as.character(colnames(cor_table)[i]),
+                               to   = as.character(rownames(cor_table)),
+                               weight = as.numeric(cor_table[,i]))
+      
+        my_links <- rbind(my_links, my_links_sub)
+      
+        i <- i + 1
+      }  
+    
+    my_links <- unique(my_links[as.numeric(as.character(my_links[,3])) >= pcc,])
+    
+    network_igraph <- graph_from_data_frame(my_links, directed = FALSE)
+  }
+  } else {
     
     my_links <- data.frame(matrix(nrow = 0, ncol = 3))
     colnames(my_links) <- c("from", "to", "weight")
@@ -1268,7 +1297,7 @@ custom_igraph <- function(cor_table, pcc){
     my_links <- unique(my_links[as.numeric(as.character(my_links[,3])) >= pcc,])
     
     network_igraph <- graph_from_data_frame(my_links, directed = FALSE)
+    
   }
-  
   network_igraph  
 }

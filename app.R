@@ -628,6 +628,8 @@ column(1,
 
 server <- function(input, output, session){ # Start of SERVER-Mainframe
   
+  dir.create("./promised_tmp")
+    
   promised_tmp_wd <- "./promised_tmp"
   code <- paste(paste(sample(x = LETTERS, 2), collapse = ""), sample(999, 1), sep = "")
 #  message_log <- file(paste0(Sys.Date(), "_", code,"_log.txt"), open = "a")

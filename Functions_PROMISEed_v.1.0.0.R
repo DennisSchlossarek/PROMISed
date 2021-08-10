@@ -1115,8 +1115,7 @@ ListCoelutions <- function(data1, data2, selector, pcc_threshold, method, names_
     
     coeluting_list <- list()  
     
-    my_color <-  c("#E69F00", "#56B4E9", "#009E73", 
-                   "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+    my_color <-  c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
     listnames <- names_treatments
     drop <- c()
     mycol <- c()
@@ -1166,39 +1165,6 @@ ListCoelutions <- function(data1, data2, selector, pcc_threshold, method, names_
     names(coeluting_list) <- listnames
     
     coeluting_list
-    par(mar = c(5,6,5,4))
-    p <-  venn.diagram(coeluting_list, 
-                       category.names = names(coeluting_list),
-                       filename = NULL,
-                       output = TRUE,
-                       main = selector,
-                       main.cex = 2,
-                       main.fontfamily = "sans",
-                       main.pos = c(0.5, 1.1),
-                       
-                       # image features
-                       imagetype = "tiff",
-                       height = 600,
-                       width = 600,
-                       resolution = 256,
-                       
-                       # circle settings
-                       lwd = 3,
-                       col = mycol,
-                       fill = alpha(mycol, 0.6),
-                       
-                       # number font
-                       cex = 1.8,
-                       #  fontface = "bold",
-                       fontfamily = "sans",
-                       
-                       # set names
-                       cat.cex = 1.5,
-                       #  cat.fontface = "bold",
-                       cat.default.pos = "outer",
-                       cat.fontfamily = "sans")
-    
-    list(coeluting_list, p)
   })
 }
 

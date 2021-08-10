@@ -1,5 +1,7 @@
 # Welcome to PROMISed: A PROtein Metabolite Interaction using Size-Separation Data analysis tool
 
+install.packages("eulerr")
+
 # List of Required packages:
 require(shiny)        # For the App to run
 require(shinyBS)      # Shiny meeting bootstrap? Allows hovering Tooltips 
@@ -17,13 +19,14 @@ require(ggplot2)      # For proper Plotting
 require(multcompView) # For plotting (here, significance-indices in boxplot)
 require(gridExtra)    # Organisation of ggplots
 require(grid)         # Organisation of ggplots
-require(VennDiagram)  # Creates Venn-Diagrams
 require(igraph)       # For Network creation and analysis
 require(visNetwork)   # AWESOME interactive network
 require(pheatmap)     # AWESOME pretty heatmaps
 require(tidyr)
 require(pastecs)      # for local maxima
 require(zip)
+require(eulerr)       # for venn diagrams
+require(VennDiagram)
 
 # Load functions from outside R-scripts
 source("./Functions_PROMISEed_v.1.0.0.R")
@@ -632,10 +635,10 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
   
   promised_tmp_wd <- "./promised_tmp"
   code <- paste(paste(sample(x = LETTERS, 2), collapse = ""), sample(999, 1), sep = "")
-#  message_log <- file(paste0(Sys.Date(), "_", code,"_log.txt"), open = "a")
-#  sink(file = message_log, type = "message")
   
-  futile.logger::flog.threshold(futile.logger::ERROR, name = "VennDiagramLogger") #Switch of log-files while creating venn-diagrams
+  #setwd(promised_tmp_wd)
+  #message_log <- file(paste0(Sys.Date(), "_", code,"_log.txt"), open = "a")
+  #sink(file = message_log, type = "message")
   
   observeEvent({input$file_a
                 input$file_b}, {   # Observe Uploaded Files A
@@ -1717,7 +1720,7 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                                                                          input$pcc_slider_integration, ".txt"), 
                                                                          content = function(file) {
                                                                            
-                                                                           intersections_temp <- GetIntersections(x = Coelution_list[[1]]) 
+                                                                           intersections_temp <- GetIntersections(x = Coelution_list) 
                                                                            
                                                                            write.table(rbind(colSums(!is.na(intersections_temp)), intersections_temp), file, sep = "\t")
                                                                            
@@ -1725,7 +1728,11 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                 
                                 output$venn_set <- renderPlot({ 
                                 
-                                  grid.draw(Coelution_list[[2]])
+                                  plot(venn(Coelution_list),
+                                       fills = list(fill = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")[1:length(Coelution_list)], alpha = 0.7),
+                                       quantities = list( cex = 2),
+                                       names = list(cex = 3),
+                                       legend = list(labels = names(Coelution_list), cex = 2))
                                   
                                 })
                                 
@@ -1930,7 +1937,7 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
         
   }) # Stop observing button_treat
   }) # Stop observing upload_button
- # on.exit(sink(file = NULL))
+ #c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7") on.exit(sink(file = NULL))
   }) # Stop observing Uploaded Files A and B
 
   # Load Title-Image

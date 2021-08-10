@@ -628,8 +628,8 @@ column(1,
 
 server <- function(input, output, session){ # Start of SERVER-Mainframe
   
-  dir.create("./promised_tmp")
-    
+  dir.create("promised_tmp")
+  
   promised_tmp_wd <- "./promised_tmp"
   code <- paste(paste(sample(x = LETTERS, 2), collapse = ""), sample(999, 1), sep = "")
 #  message_log <- file(paste0(Sys.Date(), "_", code,"_log.txt"), open = "a")
@@ -755,7 +755,7 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                            br(),
                            
                            fluidRow(
-                             column(10, offset = 1,
+                             column(10, offset = 0,
                                     
                                     plotOutput(outputId = paste0("boxplot", i),
                                                height = "700px")
@@ -1106,24 +1106,42 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
           # Calculate manhattan-distances for one selected row, used for boxplots:
           my_manhattan_distances <- reactive({
             
+            if(nr_treatments >= 2 & nr_rep >= 3){
+              
             anova_input_list <- manhattan.row(x = selected_data_array, 
                                               names_treatments = names_treatments, 
                                               select_rows = row_selector, 
                                               j = as.numeric(input$Manhattan_Tabs) )
-            
+            }
           })
          
           # Creating Boxplots   
           
           output[[paste0("boxplot", j)]] <- renderPlot({
             
+           if(nr_treatments >= 2 & nr_rep >= 3){
+          # if(nr_treatments >= 10){ 
             manhattan_distances <- my_manhattan_distances()
             
             manhattan.anova.boxplot(manhattan_distances = manhattan_distances, 
                                     name_panel = name_panel, 
                                     names_treatments = names_treatments,
                                     j = as.numeric(input$Manhattan_Tabs))
+            } else {
+              
+        #      text = paste("\n   The following is text that'll appear in a plot window.\n",
+         #                  "       As you can see, it's in the plot window\n",
+          #                 "       One might imagine useful information here")
+           #   ggplot() + 
+            #    annotate("text", x = 0, y = 100, size=8, label = text) + 
+             #   theme_void()
+              
             
+              plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n')
+              text(x = 0.5, y = 1, paste("Requirements not met: At least two conditions and three replicates required."), 
+                   cex = 1.6, col = "black")
+              
+            }
           })
           
           }) # Stop Observing Manhattan_Tabs
@@ -1140,21 +1158,21 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
             # Calcuate DES for both datasets, where possbiel:
             if(metadata_a[[4]] >= 3){
               my_manhattan_a <- manhattan.anova.shiny(my_data_array_a, metadata_a[[1]], pvalue = input$pvalue)
-              my_manhattan_a[my_manhattan_a == 0] <- "NS"
+          #    my_manhattan_a[my_manhattan_a == 0] <- "NS"
               
               
             } else if(metadata_a[[4]] < 3){
-              my_manhattan_a <- matrix(nrow = nrow(my_data_array_a), ncol = 1, "Number of replicates not sufficient")
+              my_manhattan_a <- matrix(nrow = nrow(my_data_array_a), ncol = 1, "Requirements not met")
               colnames(my_manhattan_a) <- "Dis-Elution-Score"
               
             }
             
             if(metadata_b[[4]] >= 3){
               my_manhattan_b <- manhattan.anova.shiny(my_data_array_b, metadata_b[[1]], pvalue = input$pvalue)
-              my_manhattan_b[my_manhattan_b == 0] <- "NS"
+          #    my_manhattan_b[my_manhattan_b == 0] <- "NS"
               
             } else if(metadata_b[[4]] < 3){
-              my_manhattan_b <- matrix(nrow = nrow(my_data_array_b), ncol = 1, "Number of replicates not sufficient")
+              my_manhattan_b <- matrix(nrow = nrow(my_data_array_b), ncol = 1, "Requirements not met")
               colnames(my_manhattan_b) <- "Dis-Elution-Score"
               
             }

@@ -267,8 +267,12 @@ manhattan.anova.shiny <- function(x, names_treatments, pvalue){
   rownames(man_anova_check) <- rownames(x)
   colnames(man_anova_check) <- namesCombn(names_treatments)  
   
+  tukey_df <- data.frame(matrix(nrow = 0, ncol = (ncol(combn(dim(x)[3], 2))*3) ))
+  
   i <- 1
   while(i <= nrow(x)){                # 1st loop: Rows
+  
+    tukey_comb <- c()
     
     j <- 1                         # j == Nr of Combination
     while(j <= ncol(comb_treat)){     # 2nd loop: Combinations of treatments
@@ -304,9 +308,6 @@ manhattan.anova.shiny <- function(x, names_treatments, pvalue){
       auto_a[is.na(auto_a)] <- 0
       auto_b[is.na(auto_b)] <- 0
       
-      
-  #    if(sum(manhattan) != 0 & sum(auto_a) != 0 & sum(auto_b) != 0 ){   # Bypasses the actual ANOVA testing, if all Inputs to ANOVA ar 0 (or NAs) 
-        
         manhattan_v <- as.vector(t(manhattan))                   # transforms manhattan matrix to vector, used as input for anova
         auto_a_v    <- as.vector(t(auto_a[lower.tri(auto_a)]))   # transforms lower half of auto_a matrix to vector, used as input for anova
         auto_b_v    <- as.vector(t(auto_b[lower.tri(auto_b)]))   # transforms lower half of auto_b matrix to vector, used as input for anova
@@ -323,32 +324,31 @@ manhattan.anova.shiny <- function(x, names_treatments, pvalue){
         tukey_x <- TukeyHSD(aov_x)[[1]] # Post-hoc TukeyHSD 
         tukey_x[is.na(tukey_x)] <- 1    # Sets NAs to 1 (maximum not-significant) to prevent loop from arresting
         
+        tukey_comb <- c(tukey_comb,tukey_x[1,4], tukey_x[2,4], sum(c(tukey_x[1,4], tukey_x[2,4]) <= pvalue))
         
-        if(tukey_x[1,4] <= pvalue & tukey_x[2,4] <= pvalue){ # & tukey_x[3,4] > pvalue){   # Checks if their is a significant difference between Manhattan and a, and Manhattan and b
-          
+        # CHECK HERE
+  #      if(tukey_x[1,4] <= pvalue & tukey_x[2,4] <= pvalue){ # & tukey_x[3,4] > pvalue){   # Checks if there is a significant difference between Manhattan and a, and Manhattan and b
+  #        
           man_anova_check[i,j] <- TRUE                 
-          
-        } else {
-          
-          man_anova_check[i,j] <- FALSE                
-          
-        }
+  #        
+  #      } else {
+  #        
+  #        man_anova_check[i,j] <- FALSE                
+  #        
+  #      }
         
         man_anova[i,j] <- anova_x[1,5]  # Collects the uncorrected P.values for each combination
- #    } else {
-        
-  #      man_anova[i,j] <- NA      # Collects NA, if ANOVA was bypassed
-        
-   #   }
-      
-      
+   
       j <- j + 1 # close loop 2
    }
+     incProgress(amount = 1, detail = paste0(format((i / nrow(x)*100), digits = 3), "%"))
     
- #   incProgress(amount = 1, detail = paste0(format((i / nrow(x)*100), digits = 3), "%"))
+    tukey_df[i,] <- tukey_comb
     
     i <- i + 1 # close loop 1
   }
+  
+  colnames(tukey_df) <- unlist(lapply(X = namesCombn(names_treatments), FUN = function(X){paste(c("TukeyA", "TukeyB",  paste0("Tukey<=", pvalue)),X)}))
   
   man_anova_check[is.na(man_anova_check)] <- FALSE
   
@@ -364,6 +364,9 @@ manhattan.anova.shiny <- function(x, names_treatments, pvalue){
   }
   
   colnames(man_anova_check) <- apply(X = combn(names_treatments, 2, simplify = TRUE), MARGIN = 2, FUN = paste, collapse = "-")
+  
+  man_anova_check <- cbind(man_anova_check, tukey_df)
+  
   man_anova_check  # lets output data.frame escape the function
 #  })
 

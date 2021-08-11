@@ -1161,10 +1161,8 @@ ListCoelutions <- function(data1, data2, selector, pcc_threshold, method, names_
       coeluting_list <- coeluting_list[-drop]
       listnames <- listnames[-drop]
     }
-    
     names(coeluting_list) <- listnames
-    
-    coeluting_list
+    coeluting_list 
   })
 }
 

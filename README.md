@@ -46,3 +46,5 @@ How to run PROMISed:
 7. The PROMISed start page should load like this:
 ![PROMISed capture](https://user-images.githubusercontent.com/83764220/117635624-4797e800-b180-11eb-8b3a-dee42e00a263.PNG)
 
+8. For a short navigation guide, please refer to "Getting started with PROMISed".
+

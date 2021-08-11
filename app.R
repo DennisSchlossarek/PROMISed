@@ -1,7 +1,5 @@
 # Welcome to PROMISed: A PROtein Metabolite Interaction using Size-Separation Data analysis tool
 
-install.packages("eulerr")
-
 # List of Required packages:
 require(shiny)        # For the App to run
 require(shinyBS)      # Shiny meeting bootstrap? Allows hovering Tooltips 
@@ -477,8 +475,16 @@ column(1,
                                          placement = "top", 
                                          trigger = "hover"),
                              
-                             actionButton(inputId = "button_integration", label = "Confirm Correlation Settings", width = "100%")
+                             actionButton(inputId = "button_integration", 
+                                          label = "Confirm Correlation Settings", 
+                                          width = "100%")
                              ),
+                             
+                             radioButtons(inputId="euler_input", 
+                                           label = "Layout", 
+                                           choices  = c("Venn Diagram","Euler Diagram"),
+                                           selected = "Venn Diagram",
+                                           inline = TRUE),
                              
                              splitLayout(
                               downloadButton(outputId = "down_corr_table_zip", label = "Correlation Tables"),
@@ -1725,17 +1731,56 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                                                            write.table(rbind(colSums(!is.na(intersections_temp)), intersections_temp), file, sep = "\t")
                                                                            
                                                                          })
-                                
+                                observeEvent(input$euler_input, {
                                 output$venn_set <- renderPlot({ 
                                 
+                                  venn_colors <- list("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
+                                  
+                                  if(length(Coelution_list) != 0){
+                                  
+                                    if(input$euler_input == "Venn Diagram"){
+                                  
+                                      if(length(Coelution_list) > 1){
                                   plot(venn(Coelution_list),
                                        fills = list(fill = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")[1:length(Coelution_list)], alpha = 0.7),
                                        quantities = list( cex = 2),
                                        names = list(cex = 3),
                                        legend = list(labels = names(Coelution_list), cex = 2))
+                                      } else {
+                                        
+                                        Coelution_list2 <- Coelution_list[lapply(Coelution_list, length)>0]
+                                        venn_colors <- venn_colors[1:length(Coelution_list)]
+                                        venn_colors <- venn_colors[lapply(Coelution_list, length)>0]
+                                        
+                                        plot(euler(Coelution_list2),
+                                             fills = list(fill = unlist(venn_colors), alpha = 0.7),
+                                             quantities = list( cex = 2),
+                                             names = list(cex = 3),
+                                             legend = list(labels = names(Coelution_list2), cex = 2))
+                                      }
+                                        
+                                    } else if (input$euler_input == "Euler Diagram"){
                                   
+                                      Coelution_list2 <- Coelution_list[lapply(Coelution_list, length)>0]
+                                      venn_colors <- venn_colors[lapply(Coelution_list, length)>0]
+                                      
+                                  plot(euler(Coelution_list2),
+                                       fills = list(fill = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")[1:length(Coelution_list)], alpha = 0.7),
+                                       quantities = list( cex = 2),
+                                       names = list(cex = 3),
+                                       legend = list(labels = names(Coelution_list2), cex = 2))
+                                        
+                                    }
+                                  } else {
+                                    
+                                    plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n')
+                                    text(x = 0.5, y = 1, paste("No co-fractionating molecules found using curent setting."), 
+                                         cex = 1.6, col = "black")
+                                    
+                                  }
                                 })
                                 
+                                })
                                # dev.off(current_dev)
                                 
                               } # End of "Intersections of Conditions"   

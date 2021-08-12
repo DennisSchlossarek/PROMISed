@@ -630,7 +630,7 @@ PlotMyArray.row <- function(x, my_row_name, names_treatments, titel_name, plot_w
            y = -(max(x[i,,,])*0.15), 
            legend = names_treatments[c(1:dim(x)[3])], 
            #col = brewer.pal("Set2", n = 8)[c(1:dim(x)[3])], 
-           col = pal_startrek()(7)[c(1:dim(x)[3])],
+           col = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")[c(1:dim(x)[3])],
            lwd = lwidth, 
            xpd = TRUE, 
            cex = 1, 
@@ -652,7 +652,7 @@ PlotMyArray.row <- function(x, my_row_name, names_treatments, titel_name, plot_w
               lwd = lwidth,
               type = "l", 
            #   col = brewer.pal("Set2", n = 8)[j], 
-              col = pal_startrek()(7)[j],
+              col = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")[j],
               ylim = c(0, max(x[i,,,])))
           #   ,ylim = c(0,1) ,
           #   xlab = "fraction",
@@ -689,7 +689,7 @@ PlotMyArray.shiny <- function(x,  names_treatments){
     legend(x = 1, 
            y = -(max(x)*0.15), 
            legend = names_treatments[c(1:dim(x)[3])], 
-           col = pal_startrek()(7)[c(1:dim(x)[3])], 
+           col = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")[c(1:dim(x)[3])], 
            lwd = lwidth, 
            xpd = TRUE, 
            cex = 1, 
@@ -707,7 +707,7 @@ PlotMyArray.shiny <- function(x,  names_treatments){
               lwd = lwidth, 
               ylim = c(0,1), 
               type = "l", 
-              col = pal_startrek()(7)[j] ) 
+              col = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")[j] ) 
         #, xlab = "fraction", 
         #ylab = "relative intensity")
         
@@ -724,6 +724,10 @@ PlotMyArray.shiny <- function(x,  names_treatments){
 # Plot Deconvoluted Profiles 
 
 PlotDeconvoluted <- function(rep_comb, deconvoluted, my_row_name, treatment){
+  
+  decon_colors <- c("black","#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7",
+                    "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7",
+                    "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")
   
   inputrow <- which(rownames(rep_comb) == my_row_name)
   
@@ -742,14 +746,14 @@ PlotDeconvoluted <- function(rep_comb, deconvoluted, my_row_name, treatment){
   lwidth <- 2
   
   plot(my_rep_comb, type = "l", cex = 0, lwd = 1, ylim = c(0,1), xlab = "fraction", ylab = "relative intensity")
-  legend(x = 1, y = -(max(my_rep_comb)*0.15), legend = my_legend, col = c(1:length(my_legend)), lwd = lwidth, xpd = TRUE, cex = 1, title = "Peaks")
+  legend(x = 1, y = -(max(my_rep_comb)*0.15), legend = my_legend, decon_colors[c(1:length(my_legend))], lwd = lwidth, xpd = TRUE, cex = 1, title = "Peaks")
   
  if(nrow(deconvoluted_select) > 0) {
     
    i <- 1
     while(i <= nrow(deconvoluted_select)){
     
-      lines(c(1:ncol(deconvoluted_select)), deconvoluted_select[i,], type = "l", col = i + 1, lwd = lwidth)
+      lines(c(1:ncol(deconvoluted_select)), deconvoluted_select[i,], type = "l", col = decon_colors[i + 1], lwd = lwidth)
     
     i <- i + 1
    }
@@ -1041,14 +1045,14 @@ Plot2selections <- function(data1, data2, selector1, selector2){
   
   
   title(paste0( selector1," vs ", selector2), cex = 0.5)
-  legend(x = 0, y = -0.15, legend = rownames(x), col = c("black"), lwd = lwidth, xpd = TRUE, title = "Selection 1") 
-  legend(x = 10, y = -0.15, legend = rownames(y), col =  c("red"), lwd = lwidth, xpd = TRUE, title = "Selection 2") 
+  legend(x = 0, y = -0.15, legend = rownames(x), col = c("#E69F00"), lwd = lwidth, xpd = TRUE, title = "Selection 1") 
+  legend(x = 10, y = -0.15, legend = rownames(y), col =  c("#56B4E9"), lwd = lwidth, xpd = TRUE, title = "Selection 2") 
   
   l <- 1
   while(l <= dim(x)[2]){
     
-    lines(c(1:dim(x)[2]), x[l,], cex = 2, lwd = lwidth, type = "l", col = c("black") )
-    lines(c(1:dim(y)[2]), y[l,], cex = 2, lwd = lwidth, type = "l", col = c("red") )
+    lines(c(1:dim(x)[2]), x[l,], cex = 2, lwd = lwidth, type = "l", col = c("#E69F00") )
+    lines(c(1:dim(y)[2]), y[l,], cex = 2, lwd = lwidth, type = "l", col = c("#56B4E9") )
     
     l <- l + 1
   }  

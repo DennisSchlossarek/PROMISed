@@ -62,7 +62,6 @@ ui <- fluidPage( # Start of USER-INTERFACE
            tags$a(imageOutput(outputId = "my_image_processing",
                        width = "340%", 
                        height = "157px")),
-                  #  href = "http://promis.mpimp-golm.mpg.de/PDP1/")
            helpText("PROMISed review Version: 1.0.2")
            
            ),
@@ -97,7 +96,6 @@ ui <- fluidPage( # Start of USER-INTERFACE
          tags$a(imageOutput(outputId = "logo_mpimp", 
                             width = "212%", 
                             height = "100px"),
-             #   href = "https://www.mpimp-golm.mpg.de/2218806/skirycz",
                 target= "_blank")
        
 ),
@@ -106,7 +104,6 @@ column(1,
        tags$a(imageOutput(outputId = "logo_minerva", 
                           width = "212%", 
                           height = "100px"),
-            #  href = "https://www.mpimp-golm.mpg.de/2218806/skirycz",
               target= "_blank")
        
 )
@@ -549,18 +546,15 @@ column(1,
                                           splitLayout(
                                             radioButtons(inputId = "node_color_input",
                                                          label = "Node Colors",
-                                                        # choices = c(1,2),
-                                                          choiceNames = c("Cluster", "k-Coreness"), #"Uniform",
+                                                          choiceNames = c("Cluster", "k-Coreness"), 
                                                           choiceValues = c(1,2),
-                                                        # selected = 1, #"Uniform",
                                                          inline = FALSE),
                                             
                                             
                                             radioButtons(inputId = "my_layout", 
                                                          label = "Layout", 
-                                                         choiceNames = c("Force-directed","Circles"), # "Trees","Randomly???"),
+                                                         choiceNames = c("Force-directed","Circles"),
                                                          choiceValues =c(1:2),
-                                                       #  selected = "with_fr",
                                                          inline = FALSE)
                                             
                                           )
@@ -584,10 +578,7 @@ column(1,
                        
                        sidebarLayout( # Siderbar-Layout Dis-Elution-Score
                          sidebarPanel(width = 3,
-                                      
-                                    #  fluidRow(
-                                     #   column(10,offset = 1, 
-                                                
+                                   
                                                h4("Differntial Fractionation"),
                                                
                                                wellPanel(
@@ -599,8 +590,7 @@ column(1,
                                                                 label = "Download Dis-Elution-Score Results", 
                                                                 style = "width:100%;")
                                                )
-                                    #    )
-                                    #  )
+
                                       
                          ), # End of Dis-Elution-Score/Sidebar
                          mainPanel(width = 9,
@@ -835,7 +825,7 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                   
                                   visNetworkOutput(outputId = paste0("visnetwork_network_", i), 
                                                    height = "600px", 
-                                                   width = "900px"), #%>% withSpinner(color="#0dc5c1"),
+                                                   width = "900px"),
                                   hr(""),
                                   br(""),
                                   downloadButton(outputId = paste0("network_files_", i),
@@ -983,9 +973,7 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
       
       output$down_smooth <- downloadHandler(filename = paste0(Sys.Date(),"_", code,"_PROMISed_1_preprocessed.zip"), 
                                             content = function(file){
-                                              
-                                              #setwd(promised_tmp_wd)
-                                              
+
                                               data_smooothed_table_a <- data.unarray(x = my_data_array_a, 
                                                                                    names_treatments = metadata_a[[1]], 
                                                                                    names_rep = metadata_a[[3]], 
@@ -1129,7 +1117,6 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
           output[[paste0("boxplot", j)]] <- renderPlot({
             
            if(nr_treatments >= 2 & nr_rep >= 3){
-          # if(nr_treatments >= 10){ 
             manhattan_distances <- my_manhattan_distances()
             
             manhattan.anova.boxplot(manhattan_distances = manhattan_distances, 
@@ -1137,15 +1124,7 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                     names_treatments = names_treatments,
                                     j = as.numeric(input$Manhattan_Tabs))
             } else {
-              
-        #      text = paste("\n   The following is text that'll appear in a plot window.\n",
-         #                  "       As you can see, it's in the plot window\n",
-          #                 "       One might imagine useful information here")
-           #   ggplot() + 
-            #    annotate("text", x = 0, y = 100, size=8, label = text) + 
-             #   theme_void()
-              
-            
+        
               plot(c(0, 1), c(0, 1), ann = F, bty = 'n', type = 'n', xaxt = 'n', yaxt = 'n')
               text(x = 0.5, y = 1, paste("Requirements not met: At least two conditions and three replicates required."), 
                    cex = 1.6, col = "black")
@@ -1161,13 +1140,10 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
           ### Render DES download UI-elements
           
           output$down_table <- downloadHandler(filename = paste0(Sys.Date(),"_", code, "_PROMISed_6_DES.zip"), content = function(file){
-            
-           # setwd(promised_tmp_wd)
-            
+             
             # Calcuate DES for both datasets, where possbiel:
             if(metadata_a[[4]] >= 3){
               my_manhattan_a <- manhattan.anova.shiny(my_data_array_a, metadata_a[[1]], pvalue = input$pvalue)
-          #    my_manhattan_a[my_manhattan_a == 0] <- "NS"
               
               
             } else if(metadata_a[[4]] < 3){
@@ -1178,7 +1154,6 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
             
             if(metadata_b[[4]] >= 3){
               my_manhattan_b <- manhattan.anova.shiny(my_data_array_b, metadata_b[[1]], pvalue = input$pvalue)
-          #    my_manhattan_b[my_manhattan_b == 0] <- "NS"
               
             } else if(metadata_b[[4]] < 3){
               my_manhattan_b <- matrix(nrow = nrow(my_data_array_b), ncol = 1, "Requirements not met")
@@ -1269,8 +1244,6 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                       #Download Replicate-Combined Data:
                       output$down_rep_comb <- downloadHandler(filename = paste0(Sys.Date(),"_", code, "_PROMISed_2_replicate_pooled.zip"), 
                                                               content = function(file){
-                                                                
-                                                               # setwd(promised_tmp_wd)
                                                                 
                                                                 data_rep_comb_table_a <- data.unarray(x = my_data_rep_comb_a, 
                                                                                                     names_treatments = metadata_a[[1]], 
@@ -1409,7 +1382,8 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                             k <- 1
                             while(k <= nr_treatments){
                               my_col_anno    <- c(my_col_anno, rep(names_treatments[k], nr_column)) 
-                              ann_colors2$Treatment[k]  <- pal_startrek(palette = c("uniform"))(7)[k]
+                              #ann_colors2$Treatment[k]  <- pal_startrek(palette = c("uniform"))(7)[k]
+                              ann_colors2$Treatment[k] <- c("#E69F00", "#56B4E9", "#009E73","#F0E442", "#0072B2", "#D55E00", "#CC79A7")[k]
                               gaps_col <- c(gaps_col, k*nr_column)
                               k <- k + 1
                             }
@@ -1429,7 +1403,8 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                      gaps_col = gaps_col,
                                      annotation_legend = TRUE,
                                      annotation_names_col = FALSE,
-                                     annotation_colors = ann_colors2)
+                                     annotation_colors = ann_colors2,
+                                     color = hcl.colors(50, "viridis"))
                             
                           }) # End of PlotOutput: Pheatmap
                         
@@ -1520,10 +1495,7 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                                                         nr_col = metadata_b[[6]])     
                         
                           } else if(input$nodeconvolution_input == TRUE){
-                            
-                          #  my_data_deconvoluted_a <- data.frame(matrix(nrow = 0, ncol = c(1+ metadata_a[[6]])))
-                           # my_data_deconvoluted_b <- data.frame(matrix(nrow = 0, ncol = c(1+ metadata_b[[6]])))
-                            
+
                             my_data_deconvoluted_a <- numeric()
                             my_data_deconvoluted_b <- numeric()
                             
@@ -1553,8 +1525,6 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                         
                         output$down_decon <- downloadHandler(filename = paste0(Sys.Date(),"_", code, "_PROMISed_3_deconvoluted.zip"), 
                                                                 content = function(file){
-                                                                  
-                                                                 # setwd(promised_tmp_wd)
                                                                   
                                                                   write.table(my_data_deconvoluted_a, paste0(promised_tmp_wd,"/",
                                                                                                              Sys.Date(),"_", code,"_3_",
@@ -1699,7 +1669,6 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                   options = list(
                                     dom = 'Bfrltip',
                                     pageLength = 5,
-                               #     lengthMenu = c(5, 10,25, 50, 100, 200, 500),
                                     scrollX = TRUE,
                                     scrollCollapse = TRUE,
                                     searchHighlight = TRUE
@@ -1708,9 +1677,6 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                 )
                                 
                               if(input$Integration_Tabs == "Intersections of Conditions"){
-                                
-                              #  pdf(tempfile(fileext = ".pdf"))
-                              #  current_dev <- dev.cur()
                                 
                                 Coelution_list <- ListCoelutions(data1 = selected_decon_list,
                                                                  data2 = other_decon_list,
@@ -1741,11 +1707,13 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                     if(input$euler_input == "Venn Diagram"){
                                   
                                       if(length(Coelution_list) > 1){
-                                  plot(venn(Coelution_list),
-                                       fills = list(fill = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")[1:length(Coelution_list)], alpha = 0.7),
-                                       quantities = list( cex = 2),
-                                       names = list(cex = 3),
-                                       legend = list(labels = names(Coelution_list), cex = 2))
+                                        
+                                        plot(venn(Coelution_list),
+                                             fills = list(fill = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")[1:length(Coelution_list)], alpha = 0.7),
+                                             quantities = list( cex = 2),
+                                             names = list(cex = 3),
+                                             legend = list(labels = names(Coelution_list), cex = 2))
+                                 
                                       } else {
                                         
                                         Coelution_list2 <- Coelution_list[lapply(Coelution_list, length)>0]
@@ -1757,19 +1725,20 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                              quantities = list( cex = 2),
                                              names = list(cex = 3),
                                              legend = list(labels = names(Coelution_list2), cex = 2))
+                                        
                                       }
                                         
                                     } else if (input$euler_input == "Euler Diagram"){
-                                  
+                                      
                                       Coelution_list2 <- Coelution_list[lapply(Coelution_list, length)>0]
                                       venn_colors <- venn_colors[lapply(Coelution_list, length)>0]
                                       
-                                  plot(euler(Coelution_list2),
-                                       fills = list(fill = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")[1:length(Coelution_list)], alpha = 0.7),
-                                       quantities = list( cex = 2),
-                                       names = list(cex = 3),
-                                       legend = list(labels = names(Coelution_list2), cex = 2))
-                                        
+                                      plot(euler(Coelution_list2),
+                                           fills = list(fill = c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7")[1:length(Coelution_list)], alpha = 0.7),
+                                           quantities = list( cex = 2),
+                                           names = list(cex = 3),
+                                           legend = list(labels = names(Coelution_list2), cex = 2))
+                                      
                                     }
                                   } else {
                                     
@@ -1781,8 +1750,7 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                 })
                                 
                                 })
-                               # dev.off(current_dev)
-                                
+
                               } # End of "Intersections of Conditions"   
                                 
                               }) # Stop observing Data-Selections # and Integration_Tabs
@@ -1872,9 +1840,7 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                                                                                                             "_pcc_", input$pcc_slider_integration, 
                                                                                                                             ".zip"),
                                                                                                           content = function(file) {
-                                                                                                            
-                                                                                                            #setwd(promised_tmp_wd)
-                                                                                                            
+
                                                                                                             write.table(igraph::as_data_frame(network_igraph, what = "edges"),
                                                                                                                         paste0(promised_tmp_wd,"/",
                                                                                                                                Sys.Date(),"_", code,
@@ -1910,8 +1876,6 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                               
                                             observeEvent(input$node_color_input, {
                                               
-                                          #    mycol_network  <- c("#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", "#AA4499", 
-                                          #                        "#44AA99", "#999933", "#882255", "#661100", "#6699CC", "#888888")
                                               mycol_network <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7",
                                                                  "#88CCEE", "#CC6677", "#DDCC77", "#117733", "#332288", "#AA4499", 
                                                                  "#44AA99", "#999933", "#882255", "#661100", "#6699CC", "#888888",
@@ -1971,6 +1935,7 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
                                                   
                                                 })
                                               })
+                                              
                                             })    
                                           }) # Stop observing Network Tabs
                             
@@ -1982,7 +1947,6 @@ server <- function(input, output, session){ # Start of SERVER-Mainframe
         
   }) # Stop observing button_treat
   }) # Stop observing upload_button
- #c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7") on.exit(sink(file = NULL))
   }) # Stop observing Uploaded Files A and B
 
   # Load Title-Image

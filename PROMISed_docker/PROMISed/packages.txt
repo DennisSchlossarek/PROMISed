@@ -1,0 +1,34 @@
+'shiny'
+'shinyBS'
+'shinycssloaders'
+'shinybusy'
+'DT'
+'stringr'
+'stats'     
+'plyr'        
+'MESS'
+'dplyr'        
+'RColorBrewer' 
+'ggsci'        
+'ggplot2'      
+'multcompView' 
+'gridExtra'    
+'grid'         
+'igraph'       
+'visNetwork'   
+'pheatmap'     
+'tidyr'
+'pastecs'      
+'zip'
+'eulerr'       
+'VennDiagram'
+
+
+RUN R -e "install.packages(c('shiny', 'shinyBS', 'shinycssloaders', 'shinybusy', 'DT', 'stringr' , 'stats', 'plyr', 'MESS', 'dplyr', 'RColorBrewer', 'ggsci', 'ggplot2', 'multcompView', 'gridExtra', 'grid', 'igraph', 'visNetwork', 'pheatmap', 'tidyr', 'pastecs', 'zip', 'eulerr', 'VennDiagram'), repos='https://cloud.r-project.org/')"
+
+RUN R -e "install.packages(c('udunits2'), repos='https://cloud.r-project.org/')"
+
+
+
+linux apt add udunits2 ??
+linux apt add libudunits2-dev

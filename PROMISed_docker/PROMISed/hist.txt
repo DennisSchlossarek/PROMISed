@@ -1,0 +1,464 @@
+    1  sudo apt install htop
+    2  htop
+    3  ls
+    4  htop
+    5  mailspring
+    6  sudo snap install opera
+    7  sudo apt install dirmngr gnupg apt-transport-https ca-certificates software-properties-com
+    8  sudo snap install code
+    9  sudo snap install vscode
+   10  sudo snap install code --classic
+   11  cd /home/darek/
+   12  ls
+   13  cd Dev/
+   14  ls
+   15  git clone https://dariusz_bienkowski@bitbucket.org/metasysx/cat_cris.git
+   16  sudo apt install git
+   17  git clone https://dariusz_bienkowski@bitbucket.org/metasysx/cat_cris.git
+   18  R
+   19  sudo apt install     build-essential     pandoc     pandoc-citeproc     libcurl4-gnutls-dev     libcairo2-dev     libxt-dev     libssl-dev     libssh2-1-dev     libssl1.0.0     libxml2-dev     pigz    
+   20  sudo apt install     build-essential     pandoc     pandoc-citeproc     libcurl4-gnutls-dev     libcairo2-dev     libxt-dev     libssl-dev     libssh2-1-dev libxml2-dev     pigz    
+   21  sudo apt install libssl1.1 
+   22  R
+   23  mkdir /srv/data/cat/
+   24  mkdir -r /srv/data/cat/
+   25  cd ..
+   26  ls
+   27  mkdir /srv
+   28  mkdir srv
+   29  cd srv/
+   30  ls
+   31  mkdir data
+   32  cd ,,
+   33  ls
+   34  chmod R 777 srv
+   35  chmod 777 R srv
+   36  chmod -r 777 srv
+   37  chmod 777 srv -r
+   38  sudo chmod 777 srv
+   39  cd ..
+   40  sudo chmod 777 srv
+   41  sudo chmod R 777 srv 
+   42  sudo chmod -R 777 srv 
+   43  cd srv/
+   44  mkdir data
+   45  cd data/
+   46  ls
+   47  mkdir cat
+   48  sudo apt install snapd
+   49  sudo apt install snap
+   50  sudo apt install snapd
+   51  sudo snapd install opera
+   52  sudo apt install snapd
+   53  sudo nano /etc/apt/preferences.d/
+   54  /etc/apt/preferences.d/
+   55  cd /etc/apt/preferences.d/
+   56  ls
+   57  rm nosnap.pref 
+   58  sudo rm nosnap.pref 
+   59  sudo apt update 
+   60  sudo apt install snapd
+   61  sudo apt install dirmngr gnupg apt-transport-https ca-certificates software-properties-common
+   62  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+   63  sudo add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/'
+   64  sudo apt update 
+   65  sudo apt install r-base-*
+   66  sudo apt install r-base-core r-base-dev r-base-html r-base
+   67  sudo snap install pycharm-community --classic
+   68  sudo snap install krita
+   69  sudo snap install whatsdesk
+   70  sudo snap remove whatsdesk 
+   71  sudo snap install Mailspring
+   72  sudo snap install mailspring
+   73  ls
+   74  cd Downloads/
+   75  ls
+   76  unzip BattleScribe_2.03.21_Linux.zip 
+   77  ls
+   78  cd BattleScribe/
+   79  ls
+   80  ./RosterEditor.sh 
+   81  mc
+   82  sudo apt install mc
+   83  mc
+   84  sudo mc
+   85  grub2-mkconfig > /boot/grub2/grub.cfg
+   86  grub2-mkconfig
+   87  sudo update-grub
+   88  sudo apt install tlp
+   89  ls
+   90  sudo apt remove xreader*
+   91  sudo apt remove xreader
+   92  sudo apt remove xreader-common 
+   93  sudo apt install evince
+   94  ls
+   95  cd ..
+   96  lls
+   97  ls
+   98  cd Dev/
+   99  ls
+  100  git clone https://dariusz_bienkowski@bitbucket.org/metasysx/metassist.git
+  101  ls
+  102  RUN R -e "install.packages(c('tidyverse', 'shiny', 'shinydashboard', 'reshape', 'gplots', 'RColorBrewer', 'DT', 'colourpicker', 'plotly', 'heatmaply', 'shinyjs', 'shinyBS', 'gdata', 'rhandsontable', 'rlang', 'uuid', 'UpSetR', 'circlize', 'ggrepel', 'BiocManager', 'rintrojs', 'stringr'), repos='https://cloud.r-project.org/')"
+  103  R -e "install.packages(c('tidyverse', 'shiny', 'shinydashboard', 'reshape', 'gplots', 'RColorBrewer', 'DT', 'colourpicker', 'plotly', 'heatmaply', 'shinyjs', 'shinyBS', 'gdata', 'rhandsontable', 'rlang', 'uuid', 'UpSetR', 'circlize', 'ggrepel', 'BiocManager', 'rintrojs', 'stringr'), repos='https://cloud.r-project.org/')"
+  104  R -e "source('https://bioconductor.org/biocLite.R')"
+  105  R -e "BiocManager::install(c('pcaMethods', 'limma', 'dendextend', 'EnhancedVolcano'))"
+  106  sudo snap install remmina
+  107  ls
+  108  cd Desktop/
+  109  ls
+  110  ls -s /home/darek/BattleScribe/RosterEditor.sh /home/darek/Desktop/battle.ln
+  111  cat battle.link
+  112  touch battle.link
+  113  ls -s /home/darek/BattleScribe/RosterEditor.sh /home/darek/Desktop/battle.link 
+  114  ls -l /home/darek/BattleScribe/RosterEditor.sh /home/darek/Desktop/battle.link 
+  115  s
+  116  ls
+  117  cd Dev/
+  118  ls
+  119  cd metassist/
+  120  ls
+  121  cd metassist/
+  122  cd ..
+  123  git status
+  124  git add .
+  125  git commit -m 'fold changes p.adjusted added'
+  126  git config --global user.email "bienias@hotmail.com"
+  127  git config --global user.name "Dariusz Bienkowski"
+  128  git commit -m 'fold changes p.adjusted added'
+  129  git push origin master 
+  130  ls
+  131  ssh bienkowski@10.9.8.213
+  132  ls
+  133  nmcurl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
+  134  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.36.0/install.sh | bash
+  135  nvm
+  136  nvm -
+  137  nvm ls
+  138  nvm ls-remote 
+  139  nvm install -lts
+  140  nvm install --lts
+  141  nvm -version
+  142  nvm --version
+  143  nvm use --lts
+  144  nvm install npm
+  145  nvm --version
+  146  nvm ls
+  147  node
+  148  ls
+  149  r
+  150  R
+  151  ls
+  152  mc
+  153  ssh bienkowski@10.9.8.199
+  154  sudo apt install ttf-mscorefonts-installer 
+  155  sudo apt update
+  156  sudo mc
+  157  ls
+  158  cd Downloads/
+  159  ls
+  160  cd ..
+  161  ls
+  162  openssl --config Bienkowski@UTM.metasysx.eu.ovpn 
+  163  openssl opn --config Bienkowski@UTM.metasysx.eu.ovpn 
+  164  openssl open --config Bienkowski@UTM.metasysx.eu.ovpn 
+  165  sudo openssl --config Bienkowski@UTM.metasysx.eu.ovpn 
+  166  sudo openssl help
+  167  sudo openssl --help
+  168  openssl help
+  169  sudo openvpn --config Bienkowski@UTM.metasysx.eu.ovpn 
+  170  sudo snap connect remmina:avahi-observe :avahi-observe
+  171  sudo snap connect remmina:cups-control :cups-control
+  172  sudo snap connect remmina:mount-observe :mount-observe
+  173  sudo snap connect remmina:password-manager-service :password-manager-service
+  174  sudo apt install chromium
+  175  cd...
+  176  cd ..
+  177  ls
+  178  gulp build --bsfile test_roster
+  179  ls
+  180  gulp build --bsfile test_roster
+  181  ls
+  182  cd data/
+  183  ls
+  184  gulp build --bsfile test_roster
+  185  sudo apt install gimp
+  186  sudo snap install discord
+  187  ls
+  188  cd Dev/
+  189  ls
+  190  git clone https://github.com/DaeronAlagos/battlescribe-stylesheets-wh40k.git
+  191  ls
+  192  cd battlescribe-stylesheets-wh40k/
+  193  ls
+  194  npm
+  195  npm install
+  196  sudo apt instal g++
+  197  sudo apt install g++
+  198  sudo apt install build-essential 
+  199  sudo apt install gcc
+  200  sudo apt install gcc
+  201  sudo apt install build-essential 
+  202  npm install
+  203  nvm
+  204  nvm -install 10.23
+  205  nvm --install 10.23
+  206  nvm install 10.23
+  207  npm install
+  208  nvm install 8.17
+  209  npm install
+  210  cd ..
+  211  rm battlescribe-stylesheets-wh40k/
+  212  rm -f -r battlescribe-stylesheets-wh40k/
+  213  git clone https://github.com/DaeronAlagos/battlescribe-stylesheets-wh40k.git
+  214  ls 
+  215  cd battlescribe-stylesheets-wh40k/
+  216  ls
+  217  npm install
+  218  npm install --save node@earlierversion
+  219  npm install rest of packages
+  220  npm install
+  221  sudo apt update
+  222  sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
+  223  gpg -a --export E298A3A825C0D65DFD57CBB651716619E084DAB9 | sudo apt-key add -
+  224  gpg --keyserver keyserver.ubuntu.com --recv-key E298A3A825C0D65DFD57CBB651716619E084DAB9
+  225  gpg -a --export E298A3A825C0D65DFD57CBB651716619E084DAB9 | sudo apt-key add -
+  226  sudo apt update
+  227  sudo mc
+  228  sudo apt update
+  229  sudo apt install build-essential 
+  230  npm install
+  231  gulp build --bsfile YOUR_FILE.xml
+  232  gulp
+  233  npm install -g gulp
+  234  gulp build --bsfile YOUR_FILE.xml
+  235  npm rebuild node-sass
+  236  gulp build --bsfile YOUR_FILE.xml
+  237  gulp build --bsfile allowEmpty YOUR_FILE.xml
+  238  gulp build --bsfi YOUR_FILE.xml
+  239  gulp build --bsfile allowEmpty YOUR_FILE.xml
+  240  gulp build --bsfile YOUR_FILE.xml
+  241  gulp build --bsfile test_roster.xml
+  242  gulp build --bsfile test_roster.rosa
+  243  gulp build --bsfile test_roster.ros
+  244  gulp build --bsfile test_roster
+  245  gulp build --bsfile test_roster.xml
+  246  gulp build --bsfile test_roster
+  247  gulp --bsfile test_roster.xml
+  248  ls -la
+  249  cd data/
+  250  gulp --bsfile test_roster.xml
+  251  gulp --bsfile test_roster
+  252  gulp build --bsfile test_roster
+  253  gulp --bsfile test_roster
+  254  gulp build --bsfile test_roster
+  255  gulp --bsfile test_roster
+  256  gulp build --bsfile test_roster
+  257  gulp --bsfile test_roster
+  258  gulp build --bsfile test_roster
+  259  gulp --bsfile test_roster
+  260  gulp build --bsfile test_roster
+  261  gulp --bsfile test_roster
+  262  gulp build --bsfile test_roster
+  263  gulp --bsfile test_roster
+  264  ls
+  265  cd Dev
+  266  ls
+  267  cd battlescribe-stylesheets-wh40k/
+  268  ls
+  269  ls -la
+  270  rm -f -r .git
+  271  ls -la
+  272  git init
+  273  ls
+  274  git remote add origin https://bienias.visualstudio.com/battlescribe-stylesheets-wh40k/_git/battlescribe-stylesheets-wh40k
+  275  git push -u origin --all
+  276  git add .
+  277  git commit -m 'first'
+  278  git push -u origin --all
+  279  sudo snap install prospect-mail
+  280  perl
+  281  perl -v
+  282  sudo apt-get install libdev-perl
+  283  sudo apt-get update
+  284  sudo apt-get install libdev-perl
+  285  sudo apt-get install libperl-dev
+  286  cern
+  287  cpan
+  288  sudo cpan install Perl::LanguageServer
+  289  node --version
+  290  node 
+  291  nodejs
+  292  sudo install node
+  293  curl https://raw.githubusercontent.com/creationix/nvm/master/install.sh | bash 
+  294  nvm
+  295  nvm --version
+  296  nvm current
+  297  nvm install 8.17
+  298  nvm use 8.17
+  299  nvm current
+  300  ls
+  301  cd Dev/
+  302  ls
+  303  rm -f -r battlescribe-stylesheets-wh40k/
+  304  ls
+  305  git clone https://bienias.visualstudio.com/battlescribe-stylesheets-wh40k/_git/battlescribe-stylesheets-wh40k
+  306  ls
+  307  cd battlescribe-stylesheets-wh40k/
+  308  ls
+  309  npm install
+  310  ls
+  311  gulp 
+  312  gulp build --bsfile EC_585
+  313  gulp --bsfile EC_585
+  314  cd /home/darek/Pictures/patrol_12_02_2021
+  315  ls
+  316  sudo apt-get install imagemagick
+  317  ls -la
+  318  mogrify -resize 1000 *.jpg
+  319  ls -la
+  320  ls
+  321  ls -la
+  322  cd Dev/
+  323  ls
+  324  ls -la
+  325  cd ../Dev/
+  326  ls
+  327  cd battlescribe-stylesheets-wh40k/
+  328  ls
+  329  git add .
+  330  git commit -m 'added base'
+  331  git push origin master
+  332  s
+  333  ls
+  334  cd ..
+  335  cd darek/
+  336  ls
+  337  cd De
+  338  cd Dev/
+  339  ls
+  340  rm -f -r metassist
+  341  rm -f -r metassist_online/
+  342  ls
+  343  git clone https://dariusz_bienkowski@bitbucket.org/metasysx/metassist_online.git
+  344  ls
+  345  cd metassist_online/
+  346  git
+  347  git status
+  348  git add .
+  349  git commit -m 'changes in stat and PCA'
+  350  git push origin master
+  351  git status
+  352  ls
+  353  cd 
+  354  cd Dev/
+  355  ls
+  356  cd metassist_online/
+  357  ls
+  358  git status 
+  359  git log
+  360  ls
+  361  sudo apt install okular
+  362  sudo apt install gnome-shell-pomodoro
+  363  wget -O- https://updates.signal.org/desktop/apt/keys.asc |  sudo apt-key add -
+  364  sudo apt update && sudo apt install signal-desktop
+  365  echo "deb [arch=amd64] https://updates.signal.org/desktop/apt xenial main" |  sudo tee -a /etc/apt/sources.list.d/signal-xenial.list
+  366  sudo apt update && sudo apt install signal-desktop
+  367  mogrify -resize x1600 *.jpg
+  368  ls -la
+  369  ls
+  370  cd ..
+  371  ls
+  372  cd ..
+  373  ls
+  374  cd Dev/
+  375  cd metassist_online/
+  376  ls
+  377  git add .
+  378  git commit -m 'anova next'
+  379  git push origin master 
+  380  ls
+  381  cd  Dev/
+  382  ls
+  383  rm -r -f battlescribe-stylesheets-wh40k/
+  384  ls
+  385  git clone https://dariusz_bienkowski@bitbucket.org/metasysx/metassist_online.git
+  386  ls
+  387  rm -f -t metassist_online/
+  388  rm -f -r metassist_online/
+  389  git clone https://dariusz_bienkowski@bitbucket.org/metasysx/metassist_online.git
+  390  it clone https://dariusz_bienkowski@bitbucket.org/metasysx/metassist_online.git
+  391  git clone https://bienias.visualstudio.com/anova/_git/anova
+  392  ls
+  393  cd Dev/
+  394  ls
+  395  sudo apt install librsvg2-dev
+  396  sudo apt install openbabel
+  397  sudo apt install openbabel-gui 
+  398  obabel 
+  399  ls
+  400  cd smile/
+  401  ls
+  402  ls -la
+  403  obabel smiles_tsv.smi -O out.sdf
+  404  obabel smiles_tsv.smi -O out_2D.sdf --gen2D
+  405  obabel smiles_tsv.smi -O out_3D.sdf --gen3D
+  406  cd Dev/
+  407  ls
+  408  cd smile/
+  409  ls
+  410  git init
+  411  git add .
+  412  git status
+  413  git commit -m 'first'
+  414  git remote add origin https://bienias.visualstudio.com/smile/_git/smile
+  415  git push -u origin --all
+  416  ls
+  417  cd Dev/
+  418  ls
+  419  cd smile/
+  420  ls
+  421  obabel all_dipeptides.smi -O all_dipep_1D.sdf
+  422  obabel all_dipeptides.smi -O all_dipep_2D.sdf --gen2D
+  423  obabel all_dipeptides.smi -O all_dipep_3D.sdf --gen3D
+  424  ls()
+  425  sudo apt install geany
+  426  sudo apt install Evolution
+  427  sudo apt install evolution
+  428  sudo apt install evolution-ews 
+  429  sudo apr remove eclipse
+  430  sudo apt remove eclipse
+  431  sudo apt autoremove 
+  432  sudo apt remove eclipse
+  433  ls
+  434  perl lwesson7.pl 
+  435  obabel all_dipeptides.smi -O all_dipep_1D.sdf
+  436  redshift
+  437  mc
+  438  history 
+  439  history -> hist.tx
+  440  history -> hist.txt
+  441  history | hist.txt
+  442  history > hist.txt
+  443  cat hist.tx
+  444  cat hist.txt
+  445  redshift
+  446  top
+  447  htop
+  448  htop sdaa
+  449  ls
+  450  ls -la
+  451  nano .config/
+  452  nano .config
+  453  nano config
+  454  nano redshift.conf
+  455  ls
+  456  ls -la
+  457  code redshift.conf
+  458  ls -la
+  459  redshift stop
+  460  redshift
+  461  RUN R -e "install.packages(c('shiny', 'shinyBS', 'shinycssloaders', 'shinybusy', 'DT', 'stringr' , 'stats', 'plyr', 'MESS', 'dplyr', 'RColorBrewer', 'ggsci', 'ggplot2', 'multcompView', 'gridExtra', 'grid', 'igraph', 'visNetwork', 'pheatmap', 'tidyr', 'pastecs', 'zip', 'eulerr', 'VennDiagram'), repos='https://cloud.r-project.org/')"
+  462  R -e "install.packages(c('shiny', 'shinyBS', 'shinycssloaders', 'shinybusy', 'DT', 'stringr' , 'stats', 'plyr', 'MESS', 'dplyr', 'RColorBrewer', 'ggsci', 'ggplot2', 'multcompView', 'gridExtra', 'grid', 'igraph', 'visNetwork', 'pheatmap', 'tidyr', 'pastecs', 'zip', 'eulerr', 'VennDiagram'), repos='https://cloud.r-project.org/')"
+  463  history 
+  464  history > hist.txt

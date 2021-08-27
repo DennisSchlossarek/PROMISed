@@ -1,0 +1,52 @@
+
+R version 4.0.3 (2020-10-10) -- "Bunny-Wunnies Freak Out"
+Copyright (C) 2020 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> install.packages(c('shiny', 'shinyBS', 'shinycssloaders', 'shinybusy', 'DT', 'stringr' , 'stats', 'plyr', 'MESS', 'dplyr', 'RColorBrewer', 'ggsci', 'ggplot2', 'multcompView', 'gridExtra', 'grid', 'igraph', 'visNetwork', 'pheatmap', 'tidyr', 'pastecs', 'zip', 'eulerr', 'VennDiagram'), repos='https://cloud.r-project.org/')
+g++ -std=gnu++11 -I"/usr/share/R/include" -DNDEBUG  -I'/home/darek/R/x86_64-pc-linux-gnu-library/4.0/Rcpp/include'   -I../inst/include -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-8T8CYO/r-base-4.0.3=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c RcppEigen.cpp -o RcppEigen.o
+g++ -std=gnu++11 -I"/usr/share/R/include" -DNDEBUG  -I'/home/darek/R/x86_64-pc-linux-gnu-library/4.0/Rcpp/include'   -I../inst/include -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-8T8CYO/r-base-4.0.3=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c RcppExports.cpp -o RcppExports.o
+g++ -std=gnu++11 -I"/usr/share/R/include" -DNDEBUG  -I'/home/darek/R/x86_64-pc-linux-gnu-library/4.0/Rcpp/include'   -I../inst/include -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-8T8CYO/r-base-4.0.3=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c fastLm.cpp -o fastLm.o
+gcc -std=gnu99 -I"/usr/share/R/include" -DNDEBUG  -I'/home/darek/R/x86_64-pc-linux-gnu-library/4.0/Rcpp/include'    -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-8T8CYO/r-base-4.0.3=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c init.c -o init.o
+g++ -std=gnu++11 -shared -L/usr/lib/R/lib -Wl,-Bsymbolic-functions -Wl,-z,relro -o RcppEigen.so RcppEigen.o RcppExports.o fastLm.o init.o -llapack -lblas -lgfortran -lm -lquadmath -L/usr/lib/R/lib -lR
+gfortran -fno-optimize-sibling-calls  -fvisibility=hidden -fpic -g -O2 -fdebug-prefix-map=/build/r-base-8T8CYO/r-base-4.0.3=. -fstack-protector-strong -msse2 -mfpmath=sse   -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-8T8CYO/r-base-4.0.3=. -fstack-protector-strong  -c aind.f -o aind.o
+gfortran -fno-optimize-sibling-calls  -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-8T8CYO/r-base-4.0.3=. -fstack-protector-strong  -c glmnet5dpclean.f -o glmnet5dpclean.o
+gcc -std=gnu99 -I"/usr/share/R/include" -DNDEBUG      -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-8T8CYO/r-base-4.0.3=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c C_FORTRAN_interface.c -o C_FORTRAN_interface.o
+gcc -std=gnu99 -I"/usr/share/R/include" -DNDEBUG      -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-8T8CYO/r-base-4.0.3=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c miwa.c -o miwa.o
+gfortran -fno-optimize-sibling-calls  -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-8T8CYO/r-base-4.0.3=. -fstack-protector-strong  -c mvt.f -o mvt.o
+checking whether the C++ compiler works... yes
+checking for C++ compiler default output file name... a.out
+checking for suffix of executables... 
+checking whether we are cross compiling... no
+checking for suffix of object files... o
+checking whether we are using the GNU C++ compiler... yes
+checking whether g++ -std=gnu++11 accepts -g... yes
+checking how to run the C++ preprocessor... g++ -std=gnu++11 -E
+checking whether we are using the GNU C++ compiler... (cached) yes
+checking whether g++ -std=gnu++11 accepts -g... (cached) yes
+checking whether we have a suitable tempdir... /tmp
+checking whether R CMD SHLIB can already compile programs using OpenMP... yes
+checking LAPACK_LIBS... system LAPACK found
+configure: creating ./config.status
+config.status: creating inst/include/RcppArmadilloConfigGenerated.h
+config.status: creating src/Makevars
+g++ -std=gnu++11 -I"/usr/share/R/include" -DNDEBUG  -I'/home/darek/R/x86_64-pc-linux-gnu-library/4.0/Rcpp/include'   -I../inst/include  -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-8T8CYO/r-base-4.0.3=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c RcppArmadillo.cpp -o RcppArmadillo.o
+g++ -std=gnu++11 -I"/usr/share/R/include" -DNDEBUG  -I'/home/darek/R/x86_64-pc-linux-gnu-library/4.0/Rcpp/include'   -I../inst/include  -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-8T8CYO/r-base-4.0.3=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c RcppExports.cpp -o RcppExports.o
+g++ -std=gnu++11 -I"/usr/share/R/include" -DNDEBUG  -I'/home/darek/R/x86_64-pc-linux-gnu-library/4.0/Rcpp/include'   -I../inst/include  -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-8T8CYO/r-base-4.0.3=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c fastLm.cpp -o fastLm.o
+g++ -std=gnu++11 -shared -L/usr/lib/R/lib -Wl,-Bsymbolic-functions -Wl,-z,relro -o RcppArmadillo.so RcppArmadillo.o RcppExports.o fastLm.o -llapack -lblas -lgfortran -lm -lquadmath -L/usr/lib/R/lib -lR
+g++ -std=gnu++11 -I"/usr/share/R/include" -DNDEBUG      -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-8T8CYO/r-base-4.0.3=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c Caller.cpp -o Caller.o
+g++ -std=gnu++11 -I"/usr/share/R/include" -DNDEBUG      -fpic  -g -O2 -fdebug-prefix-map=/build/r-base-8T8CYO/r-base-4.0.3=. -fstack-protector-strong -Wformat -Werror=format-security -Wdate-time -D_FORTIFY_SOURCE=2 -g  -c Engine.cpp -o Engine.o

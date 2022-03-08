@@ -2,8 +2,6 @@
 # PROMISed
 A Shiny App for the Analysis of Co-Fractionation Mass Spectrometry Data
 
-v1.0.2 is intended for peer reviewing purposes
-
 How to run PROMISed:
 
 1. Download and install R from https://cran.r-project.org/.
